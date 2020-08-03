@@ -21,7 +21,8 @@
         and kubectl_projects is defined
         and kubectl_projects | length > 0
         and not kubectl_install_os_dependencies
-
+  ignore_errors: "{{ ansible_check_mode }}"
+  
 - name: Check for existing kubectl binary
   stat:
     path: "{{ kubectl_install_dir }}/kubectl"

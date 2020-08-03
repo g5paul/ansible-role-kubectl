@@ -29,9 +29,11 @@
   when: not kubectl_check_existing.stat.exists
         or (kubectl_check_existing.stat.exists
             and kubectl_check_existing_version.stdout_lines[0] != kubectl_version)
-
+  ignore_errors: "{{ ansible_check_mode }}"
+  
 - name: Ensure kubectl package is symlinked
   file:
     src: "{{ kubectl_install_dir }}/kubectl-{{ kubectl_version }}"
     dest: "{{ kubectl_install_dir }}/kubectl"
     state: link
+  ignore_errors: "{{ ansible_check_mode }}"

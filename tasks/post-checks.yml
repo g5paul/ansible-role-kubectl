@@ -12,7 +12,8 @@
       - kubectl_check_installed.stat.islnk
     fail_msg: kubectl was not installed as expected, it is likely something went wrong.
     success_msg: kubectl has been installed as expected.
-
+  ignore_errors: "{{ ansible_check_mode }}"
+  
 - name: Check the kubectl binary version matches the expected version
   shell: >
     set -o pipefail && \
@@ -23,10 +24,12 @@
   changed_when: false
   failed_when: false
   register: kubectl_check_installed_version
-
+  ignore_errors: "{{ ansible_check_mode }}"
+  
 - name: Fail play if kubectl is not the expected version
   assert:
     that:
       - kubectl_check_installed_version.stdout_lines[0] == kubectl_version
     fail_msg: Installed kubectl version is not as expected, it is likely something went wrong.
     success_msg: Installed kubectl version is as expected.
+  ignore_errors: "{{ ansible_check_mode }}"    
