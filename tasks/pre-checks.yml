@@ -38,3 +38,4 @@
   changed_when: false
   register: kubectl_check_existing_version
   when: kubectl_check_existing.stat.exists
+  ignore_errors: "{{ ansible_check_mode }}"
